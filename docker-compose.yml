@@ -1,0 +1,57 @@
+version: "7.4.7"
+services:
+  # ─── REDIS ───────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine          # Lightweight Redis 7 image based on Alpine Linux
+    container_name: redis          # Fixed container name for easy reference
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "1234"]
+    # --appendonly yes  → enables AOF persistence (data survives restarts)
+    # --requirepass     → protects Redis with a password (here: "1234")
+    ports:
+      - "6379:6379"                # Exposes Redis on host port 6379 → container port 6379
+    volumes:
+      - redis-data:/data           # Persists Redis data to a named volume so it survives container restarts
+
+  # ─── SONARQUBE ───────────────────────────────────────────────────────────────
+  sonarqube:
+    image: sonarqube:community     # Official SonarQube Community Edition (free & open source)
+    container_name: sonarqube      # Fixed container name for easy reference
+    depends_on:
+      - sonar_db                   # Ensures PostgreSQL starts before SonarQube does
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar_db:5432/sonar
+      # Tells SonarQube where to find the database
+      # "sonar_db" is resolved via Docker's internal DNS (the service name above)
+      SONAR_JDBC_USERNAME: sonar   # Database username (must match POSTGRES_USER below)
+      SONAR_JDBC_PASSWORD: sonar   # Database password (must match POSTGRES_PASSWORD below)
+    ports:
+      - "9000:9000"                # Exposes the SonarQube web UI on http://localhost:9000
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data            # Stores analysis data & search indexes
+      - sonarqube_extensions:/opt/sonarqube/extensions # Stores installed plugins
+      - sonarqube_logs:/opt/sonarqube/logs            # Stores application logs
+    ulimits:
+      nofile:
+        soft: 131072               # Sets the soft limit for open file descriptors (required by SonarQube)
+        hard: 131072               # Sets the hard limit for open file descriptors (required by SonarQube)
+
+  # ─── POSTGRESQL (SonarQube database) ─────────────────────────────────────────
+  sonar_db:
+    image: postgres:15             # Official PostgreSQL 15 image
+    container_name: sonar_db       # Fixed container name for easy reference
+    environment:
+      POSTGRES_USER: sonar         # Creates a DB user named "sonar" (must match SONAR_JDBC_USERNAME above)
+      POSTGRES_PASSWORD: sonar     # Sets the DB user password (must match SONAR_JDBC_PASSWORD above)
+      POSTGRES_DB: sonar           # Creates a database named "sonar" on first startup
+    volumes:
+      - sonar_db_data:/var/lib/postgresql/data  # Persists all DB data so it survives container restarts
+    # Note: No "ports" here — PostgreSQL is intentionally not exposed to the host,
+    # only SonarQube can reach it through Docker's internal network
+
+# ─── VOLUMES ─────────────────────────────────────────────────────────────────
+volumes:
+  redis-data:           # Named volume for Redis persistence
+  sonarqube_data:       # Named volume for SonarQube analysis data
+  sonarqube_extensions: # Named volume for SonarQube plugins
+  sonarqube_logs:       # Named volume for SonarQube logs
+  sonar_db_data:        # Named volume for PostgreSQL data
