@@ -20,7 +20,7 @@ public class ServicePricing {
 
     public List<Forms> getRequestsForPricing(String email, HttpServletRequest theRequest)  {
         SanitizeHeader sanitizeHeader = new SanitizeHeader();
-        sanitizeHeader.sanitizeHeader(email, theRequest);
+        sanitizeHeader.verifyHeader(email, theRequest);
         return formsRepository.formsForPricing(email);
     }
 

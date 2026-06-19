@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.accessbasededonnees.model.Forms;
 import org.example.accessbasededonnees.repository.FormsRepository;
 import org.example.accessbasededonnees.util.SanitizeHeader;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class FormulaireService {
 
     public List<Forms> getFormsByEmail(String email, HttpServletRequest theRequest)  {
         SanitizeHeader sanitizeHeader = new SanitizeHeader() ;
-        sanitizeHeader.sanitizeHeader(email, theRequest);
+        sanitizeHeader.verifyHeader(email, theRequest);
         return formsRepository.findFormsByEmail(email);
     }
 

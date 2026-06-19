@@ -19,7 +19,7 @@ public class ServiceRegulatoryAffairs {
 
     public List<Forms> getFormsWithMarking(String email , HttpServletRequest theRequest)  {
         SanitizeHeader sanitizeHeader = new SanitizeHeader();
-        sanitizeHeader.sanitizeHeader(email, theRequest);
+        sanitizeHeader.verifyHeader(email, theRequest);
         return formsRepository.formsWithMarking(email);
     }
 
