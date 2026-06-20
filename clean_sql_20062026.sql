@@ -31,8 +31,8 @@ CASCADE;
 
 -- Status table
 CREATE TABLE status_demand (
-    id_status 					       varchar(255) PRIMARY KEY
-    ,status_name 			           VARCHAR(255)
+    id_status 					        varchar(255) PRIMARY KEY
+    ,status_name 			            VARCHAR(255)
 );
 
 -- Marquage table
@@ -56,34 +56,34 @@ CREATE TABLE regulatory_affairs_validation (
 
 -- Validation Achat table
 CREATE TABLE purchase_validation (
-    purchase_validation 			    VARCHAR(255)  PRIMARY KEY
+    purchase_validation 			           VARCHAR(255)  PRIMARY KEY
 );
 
 -- Traceability table
 CREATE TABLE traceability (
-    id_traceability 				    SERIAL PRIMARY KEY,
-    traceability_description 		    VARCHAR(255)
+    id_traceability 				           SERIAL PRIMARY KEY,
+    traceability_description 		           VARCHAR(255)
 );
 
 -- Tarif Douanier table
 CREATE TABLE tariffs (
-    tariff_code 					    INT PRIMARY KEY,
-    tariff_code_description 		    VARCHAR(255)
+    tariff_code 					            INT PRIMARY KEY,
+    tariff_code_description 		            VARCHAR(255)
 );
 
 -- Gamme table
 CREATE TABLE product_line (
-    product_line_id 				    SERIAL PRIMARY KEY,
-    product_line_name 				    VARCHAR(255)
+    product_line_id 				            SERIAL PRIMARY KEY,
+    product_line_name 				            VARCHAR(255)
 );
 
 -- Product Type table
 CREATE TABLE product_type (
-    product_type_id 				    SERIAL PRIMARY KEY,
-    product_type_name 				    VARCHAR(255),
-    id_traceability 				    INT NOT NULL,
-    tariff_code 					    INT NOT NULL,
-    product_line_id 				    INT NOT NULL,
+    product_type_id 				            SERIAL PRIMARY KEY,
+    product_type_name 				            VARCHAR(255),
+    id_traceability 				            INT NOT NULL,
+    tariff_code 					            INT NOT NULL,
+    product_line_id 				            INT NOT NULL,
     
     CONSTRAINT fk_traceability FOREIGN KEY(id_traceability)  
     REFERENCES Traceability(id_traceability),
@@ -121,19 +121,19 @@ CREATE TABLE product_hierarchy (
 
 -- Product table
 CREATE TABLE Product (
-    product_id					    INT PRIMARY KEY,
-    product_name 					VARCHAR(255) not null,
-    weight_and_unit_measure 		VARCHAR(255),
-    length_and_unit_measure 		VARCHAR(255),
-    width_and_unit_measure 			VARCHAR(255),
-    height_and_unit_Measure 		VARCHAR(255),
-    maximal_quantity 				VARCHAR(255),
-    dangerous_product 				BOOLEAN,
-    product_hierarchy_id 		    INT NOT NULL,
-    id_supplier 					INT NULL,
-    product_classification_id 		INT NULL,
-    catalog_price 					numeric,
-    product_type_id 				int not null, 
+    product_id					                INT PRIMARY KEY,
+    product_name 					            VARCHAR(255) not null,
+    weight_and_unit_measure 		            VARCHAR(255),
+    length_and_unit_measure 		            VARCHAR(255),
+    width_and_unit_measure 			            VARCHAR(255),
+    height_and_unit_Measure 		            VARCHAR(255),
+    maximal_quantity 				            VARCHAR(255),
+    dangerous_product 				            BOOLEAN,
+    product_hierarchy_id 		                INT NOT NULL,
+    id_supplier 					            INT NULL,
+    product_classification_id 		            INT NULL,
+    catalog_price 					            numeric,
+    product_type_id 				            int not null, 
     
     constraint fk_type_of_product foreign key(product_type_id)
     references product_type(product_type_id),
@@ -150,14 +150,14 @@ CREATE TABLE Product (
 
 -- Country Origin table
 CREATE TABLE product_country_of_origin (
-    product_country_origin_id 	    SERIAL PRIMARY KEY,
-    product_country_origin_name     VARCHAR(255)
+    product_country_origin_id 	                SERIAL PRIMARY KEY,
+    product_country_origin_name                 VARCHAR(255)
 );
 
 -- Provenance table
 CREATE TABLE provenance (
-    product_type_Id	 				INT,
-    product_country_origin_id 		INT,
+    product_type_Id	 				            INT,
+    product_country_origin_id 		            INT,
     
     primary key(product_country_origin_id,product_type_Id),
 
@@ -170,23 +170,23 @@ CREATE TABLE provenance (
 
 -- Reference Type table
 CREATE TABLE reference_type (
-    reference_type_id 			   VARCHAR(255) PRIMARY KEY,
-    type_of_reference 			   VARCHAR(255) not null 
+    reference_type_id 			               VARCHAR(255) PRIMARY KEY,
+    type_of_reference 			               VARCHAR(255) not null 
 );
 
 
 -- Country table
 CREATE TABLE country (
-    id_country 					   SERIAL PRIMARY KEY,
-    country_name 				   VARCHAR(255) not null   
+    id_country 					               SERIAL PRIMARY KEY,
+    country_name 				               VARCHAR(255) not null   
 );
 
 
 -- Region table
 CREATE TABLE region (
-    id_region 					   SERIAL PRIMARY KEY,
-    region_name 				   VARCHAR(255) not null,
-    id_country 					   INT NOT NULL,
+    id_region 					               SERIAL PRIMARY KEY,
+    region_name 				               VARCHAR(255) not null,
+    id_country 					               INT NOT NULL,
     
     CONSTRAINT fk_country FOREIGN KEY(id_Country)
     REFERENCES country(id_Country)
@@ -195,30 +195,30 @@ CREATE TABLE region (
 -- Continent table
 
 create table attachments(
-	attachment_id 				  int primary key, 
-	attachment_content 			  BYTEA not null, 
-	attachment_name 			  VARCHAR(255) not null
+	attachment_id 				               int primary key, 
+	attachment_content 			               BYTEA not null, 
+	attachment_name 			               VARCHAR(255) not null
     ); 
 
 
 
 -- Demand table
 CREATE TABLE demand (
-    pricing_validation 			  VARCHAR(255),
-    reg_affairs_validation 		  VARCHAR(255),
-    purchase_validation 		  VARCHAR(255),
-    id_status 					  VARCHAR(255),
-    id_marking 				      INT NULL,
-    reference_type_id 			  VARCHAR(255),
-    pricing_comments 			  VARCHAR(255), 
-    purchase_comments			  Varchar(255),  
-    regAffairs_comments           Varchar(255), 
-    alternative_reference 		  INT, 
-    id_country 					  INT NOT NULL,
-    to_be_published	 			  boolean, 
-    bills_of_material 			  boolean,
-    attachment_id 			      int null, 
-    product_id 					  int not null,  
+    pricing_validation 			               VARCHAR(255),
+    reg_affairs_validation 		               VARCHAR(255),
+    purchase_validation 		               VARCHAR(255),
+    id_status 					               VARCHAR(255),
+    id_marking 				                   INT NULL,
+    reference_type_id 			               VARCHAR(255),
+    pricing_comments 			               VARCHAR(255), 
+    purchase_comments			               Varchar(255),  
+    regAffairs_comments                        Varchar(255), 
+    alternative_reference 		               INT, 
+    id_country 					               INT NOT NULL,
+    to_be_published	 			               boolean, 
+    bills_of_material 			               boolean,
+    attachment_id 			                   int null, 
+    product_id 					               int not null,  
     
     primary key(id_country,product_id),
     
@@ -251,23 +251,23 @@ CREATE TABLE demand (
 );
 
 create table profiles(
-	 profile_id 		 		  serial primary key,
-	 profile_description 	 	  VARCHAR(255),  
-	 profile_name 				  varchar(255)
+	 profile_id 		 		                 serial primary key,
+	 profile_description 	 	                 VARCHAR(255),  
+	 profile_name 				                 varchar(255)
 	) ;
 
 
 -- App User table
 CREATE TABLE app_user (
-    email 						VARCHAR(255) PRIMARY KEY,
-    first_name 					VARCHAR(255) NOT NULL,
-    last_name 					VARCHAR(255) NOT NULL,
-    password 					VARCHAR(255) not null, 
-    profile_id      			INT not null, 
-    id_country 					INT NOT NULL, 
-    account_expired				boolean,  
-    account_locked				boolean,  
-    account_disable				boolean,
+    email 						                 VARCHAR(255) PRIMARY KEY,
+    first_name 					                 VARCHAR(255) NOT NULL,
+    last_name 					                 VARCHAR(255) NOT NULL,
+    password 					                 VARCHAR(255) not null, 
+    profile_id      			                 INT not null, 
+    id_country 					                 INT NOT NULL, 
+    account_expired				                 boolean,  
+    account_locked				                 boolean,  
+    account_disable				                 boolean,
     
     CONSTRAINT fk_userCountry FOREIGN KEY (id_country) REFERENCES country(id_country),
     constraint fk_userProfile foreign key (profile_id) references profiles(profile_id)
