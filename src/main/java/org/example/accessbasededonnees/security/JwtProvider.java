@@ -174,11 +174,11 @@ public class JwtProvider {
 
     private void manageExpirationDate(String tokenType){
          Date now = new Date();
-         if(tokenType.equals("access_token")){
+         if("access_token".equals(tokenType)){
             this.expirationDate = new Date(now.getTime() + accessAdditionalTimeValidity); // now plus 15 minutes
-         } else if(tokenType.equals("refresh_token")  && (TIME_REQUIRED_TO_EXPIRE.getTime() - now.getTime() > rotationThreshold)) {  // 1 day
+         } else if("refresh_token".equals(tokenType)  && (TIME_REQUIRED_TO_EXPIRE.getTime() - now.getTime() > rotationThreshold)) {  // 1 day
             this.expirationDate = TIME_REQUIRED_TO_EXPIRE; // remaining time to expire
-         } else if(tokenType.equals("refresh_token") && (TIME_REQUIRED_TO_EXPIRE.getTime() - now.getTime() <= rotationThreshold)) {
+         } else if("refresh_token".equals(tokenType)  && (TIME_REQUIRED_TO_EXPIRE.getTime() - now.getTime() <= rotationThreshold)) {
             this.expirationDate = new Date(now.getTime() + refreshAdditionalTimeValidity); // now plus 7 days
         }
     }
