@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface AppUserProfileRepository extends JpaRepository<AppUser, String> {
-    // Retourne le profil directement pour un utilisateur via son email
     @Query("SELECT a.profiles FROM AppUser a WHERE a.email = :email")
     Optional<Profiles> findProfilesByEmail(@Param("email") String email);
 }

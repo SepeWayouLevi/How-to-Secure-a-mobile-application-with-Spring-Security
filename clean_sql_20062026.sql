@@ -31,38 +31,38 @@ CASCADE;
 
 -- Status table
 CREATE TABLE status_demand (
-    id_status 					        varchar(255) PRIMARY KEY
-    ,status_name 			            VARCHAR(255)
+    id_status 					                varchar(255) PRIMARY KEY
+    ,status_name 			                    VARCHAR(255)
 );
 
 -- Marquage table
 CREATE TABLE marking (
-    id_marking 					        INT PRIMARY key,
-    marking 				            BOOLEAN, 
-    type_of_marking 		    	    VARCHAR(255)
+    id_marking 					                INT PRIMARY key,
+    marking 				                    BOOLEAN,
+    type_of_marking 		    	            VARCHAR(255)
 );
 
 -- Validation Pricing table
 CREATE TABLE pricing_validation ( 
-	pricing_validation 				    VARCHAR(255) PRIMARY key     
+	pricing_validation 				            VARCHAR(255) PRIMARY key
 );
 
 -- Regulatory Affairs Validation table
 CREATE TABLE regulatory_affairs_validation (
-    reg_affairs_validation 			    VARCHAR(255) primary key
+    reg_affairs_validation 			            VARCHAR(255) primary key
 
     
 );
 
 -- Validation Achat table
 CREATE TABLE purchase_validation (
-    purchase_validation 			           VARCHAR(255)  PRIMARY KEY
+    purchase_validation 			            VARCHAR(255)  PRIMARY KEY
 );
 
 -- Traceability table
 CREATE TABLE traceability (
-    id_traceability 				           SERIAL PRIMARY KEY,
-    traceability_description 		           VARCHAR(255)
+    id_traceability 				            SERIAL PRIMARY KEY,
+    traceability_description 		            VARCHAR(255)
 );
 
 -- Tarif Douanier table

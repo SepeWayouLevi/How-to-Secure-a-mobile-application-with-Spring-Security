@@ -2,7 +2,6 @@ package org.example.accessbasededonnees.service;
 import java.util.*;
 import org.example.accessbasededonnees.model.AppUser;
 import org.example.accessbasededonnees.model.Profiles;
-import org.example.accessbasededonnees.repository.AppUserProfileRepository;
 import org.example.accessbasededonnees.repository.AppUserRepository;
 import org.example.accessbasededonnees.security.JwtProvider;
 import org.slf4j.Logger;
@@ -25,8 +24,6 @@ public class AppUserService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final AppUserProfileRepository profileRepository ;
-
     private PasswordEncoder passwordEncoder;
 
     private JwtProvider jwtProvider;
@@ -35,13 +32,11 @@ public class AppUserService {
     @Autowired
     public AppUserService(AppUserRepository appUserRepository,
                           AuthenticationManager authenticationManager,
-                          AppUserProfileRepository profileRepository, // new
                           PasswordEncoder passwordEncoder ,
                           JwtProvider jwtProvider
     ) {
          this.appUserRepository = appUserRepository;
          this.authenticationManager = authenticationManager;
-         this.profileRepository = profileRepository; // new
          this.passwordEncoder = passwordEncoder;
          this.jwtProvider = jwtProvider;
      }
